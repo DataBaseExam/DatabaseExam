@@ -66,7 +66,7 @@
     <Compile Include="ConsoleHelper.cs" />
     <Compile Include="ConsoleUiDecorator.cs" />
     <Compile Include="ConsolePlayer.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="StartUp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -81,6 +81,10 @@
     <ProjectReference Include="..\..\AI\TexasHoldem.AI.SmartPlayer\TexasHoldem.AI.SmartPlayer.csproj">
       <Project>{e7ba8017-d56e-485c-81d1-a1ccdaae624f}</Project>
       <Name>TexasHoldem.AI.SmartPlayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\TexasHoldem.AI.RaiseTwoSevenTestPlayer\TexasHoldem.AI.RaiseTwoSevenTestPlayer.csproj">
+      <Project>{4b102757-f555-4399-8942-9c907518f70f}</Project>
+      <Name>TexasHoldem.AI.RaiseTwoSevenTestPlayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\TexasHoldem.Logic\TexasHoldem.Logic.csproj">
       <Project>{bcf99e8b-2025-444f-83c7-24542fcf33df}</Project>

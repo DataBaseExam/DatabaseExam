@@ -1,12 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TexasHoldem.AI.RaiseTwoSevenTestPlayer
+﻿namespace TexasHoldem.AI.RaiseTwoSevenTestPlayer
 {
-    public class RaiseTwoSevenPlayer
+    using System;
+    using TexasHoldem.Logic.Players;
+    using TexasHoldem.Logic.Cards;
+    public class RaiseTwoSevenPlayer : BasePlayer
     {
+        public override string Name { get; } = "RaiseTwoSeven";
+
+        public override PlayerAction GetTurn(GetTurnContext context)
+        {
+            if (FirstCard.Type == CardType.Two && SecondCard.Type == CardType.Seven 
+                || SecondCard.Type == CardType.Two && FirstCard.Type == CardType.Seven)
+            {
+                return PlayerAction.Raise(context.MoneyLeft);
+            }
+            else
+            {
+                return PlayerAction.Fold();
+            }
+        }
     }
 }

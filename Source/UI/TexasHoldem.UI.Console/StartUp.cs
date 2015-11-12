@@ -1,15 +1,16 @@
 ﻿namespace TexasHoldem.UI.Console
 {
     using System;
-
+    
     using TexasHoldem.AI.SmartPlayer;
     using TexasHoldem.Logic.GameMechanics;
-
-    public static class Program
+    using TexasHoldem.AI.RaiseTwoSevenTestPlayer;
+    using TexasHoldem.AI.DummyPlayer;
+    public static class StartUp
     {
         private const string ProgramName = "TexasHoldem.UI.Console (c) 2015";
-        private const int GameHeight = 12;
-        private const int GameWidth = 66;
+        private const int GameHeight = 33;
+        private const int GameWidth = 88;
 
         public static void Main()
         {
@@ -20,9 +21,10 @@
 
             ConsoleHelper.WriteOnConsole(GameHeight - 1, GameWidth - ProgramName.Length - 1, ProgramName, ConsoleColor.Green);
 
-            var consolePlayer1 = new ConsoleUiDecorator(new ConsolePlayer(0), 0, GameWidth, 5);
+            //TODO our player here
+            var raiseTwoSevenTestPlayer = new ConsoleUiDecorator(new RaiseTwoSevenPlayer(), 0, GameWidth, 5);
             var consolePlayer2 = new ConsoleUiDecorator(new SmartPlayer(), 6, GameWidth, 5);
-            ITexasHoldemGame game = new TwoPlayersTexasHoldemGame(consolePlayer1, consolePlayer2);
+            ITexasHoldemGame game = new TwoPlayersTexasHoldemGame(raiseTwoSevenTestPlayer, consolePlayer2);
             game.Start();
         }
     }

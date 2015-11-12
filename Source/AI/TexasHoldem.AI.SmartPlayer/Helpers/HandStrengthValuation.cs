@@ -1,5 +1,9 @@
 ﻿namespace TexasHoldem.AI.SmartPlayer.Helpers
 {
+    //TODO - see how this works, becouse we will use ranges as well. Make it not with constants, but with unknowns, depending
+    //on money in pot, other player range(our statistic, could be amount of time opponent raises / divided by the amount of time
+    //opponent check/calls ( aggresion factor) for start). 
+    //And SMALL BLINDS compared to our money from context or pot size compared to our money.
     using TexasHoldem.Logic.Cards;
 
     public static class HandStrengthValuation

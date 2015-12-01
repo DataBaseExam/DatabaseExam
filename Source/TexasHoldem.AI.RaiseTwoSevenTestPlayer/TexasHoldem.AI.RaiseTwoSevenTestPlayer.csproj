@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CardValuationType.cs" />
     <Compile Include="Helpers\HandStrengthValuation.cs" />
     <Compile Include="RaiseTwoSevenPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

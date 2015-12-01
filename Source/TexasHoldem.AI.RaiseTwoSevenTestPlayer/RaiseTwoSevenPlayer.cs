@@ -9,16 +9,34 @@
     {
         public override string Name { get; } = "RaiseTwoSeven";
 
-        
+
 
         public override PlayerAction GetTurn(GetTurnContext context)
         {
+            //var playHand = HandStrengthValuation.PreFlop(this.FirstCard, this.SecondCard);
+
             if (context.RoundType == GameRoundType.PreFlop)
             {
-                if (context.MoneyLeft / context.SmallBlind > 100)
-                {
-                    
-                }
+                //if (context.MoneyLeft / context.SmallBlind > 100)
+                //{
+                //    if ()
+                //    if (context.CanCheck)
+                //    {
+                //        return PlayerAction.Raise(context.SmallBlind * 3);
+                //    }
+                //}
+            }
+            else if (context.RoundType == GameRoundType.Flop)
+            {
+
+            }
+            else if (context.RoundType == GameRoundType.Turn)
+            {
+
+            }
+            else
+            {
+
             }
 
 

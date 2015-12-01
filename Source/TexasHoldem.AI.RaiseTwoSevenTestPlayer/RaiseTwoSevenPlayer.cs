@@ -9,13 +9,15 @@
     {
         public override string Name { get; } = "RaiseTwoSeven";
 
+        
+
         public override PlayerAction GetTurn(GetTurnContext context)
         {
             if (context.RoundType == GameRoundType.PreFlop)
             {
                 if (context.MoneyLeft / context.SmallBlind > 100)
                 {
-                    //
+                    
                 }
             }
 

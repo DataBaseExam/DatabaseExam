@@ -4,7 +4,7 @@
     using TexasHoldem.Logic.Players;
     using TexasHoldem.Logic.Cards;
     using Logic;
-    using Helpers;
+    //using Helpers;
 
     public class RaiseTwoSevenPlayer : BasePlayer
     {
@@ -35,7 +35,7 @@
                 if (context.PreviousRoundActions.Count == 2)
                 {
                     IsOnButton = true;
-                    var playHand = FiftyBigBlindsHandStrengthValuation.PreFlopOnButton(this.FirstCard, this.SecondCard);
+                    //var playHand = FiftyBigBlindsHandStrengthValuation.PreFlopOnButton(this.FirstCard, this.SecondCard);
                 }
 
                 if (IsOnButton)
@@ -46,10 +46,11 @@
                         {
                             return PlayerAction.Raise(context.SmallBlind * 3);
                         }
+                        
                     }
                 }
 
-                
+            
             }
             else if (context.RoundType == GameRoundType.Flop)
             {

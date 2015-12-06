@@ -15,6 +15,7 @@
         {
             if (context.RoundType == GameRoundType.PreFlop)
             {
+                
                 var playHand = HandStrengthValuation.PreFlop(this.FirstCard, this.SecondCard);
                 if (playHand == CardValuationType.Unplayable)
                 {
@@ -27,7 +28,7 @@
                         return PlayerAction.Fold();
                     }
                 }
-
+                
                 if (playHand == CardValuationType.Risky)
                 {
                     var smallBlindsTimes = RandomProvider.Next(1, 8);

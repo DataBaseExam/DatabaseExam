@@ -7,7 +7,9 @@
     using Statistics;
     using Helpers;
     using Helpers.HandStrengthValuation;
-    
+    using Loggers;
+    using System.Collections.Generic;
+
     public class RaiseTwoSevenPlayer : BasePlayer
     {
         public override string Name { get; } = "RaiseTwoSeven";
@@ -308,6 +310,16 @@
 
             }
             return PlayerAction.CheckOrCall();
+        }
+
+        public static void WriteToFile(string filePath, IEnumerable<string> input)
+        {
+            var logger = new FileLogger(filePath);
+
+            foreach (var line in input)
+            {
+                logger.Log(line);
+            }
         }
 
     }

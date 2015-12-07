@@ -40,7 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\HandStrengthValuation\AboveFiftyBigBlindsHandStrengthValuation.cs" />
+    <Compile Include="EvaluateHand\HandEvaluateRaiseTwo.cs" />
+    <Compile Include="Helpers\HandStrengthValuation\NoInfoReccomended.cs" />
     <Compile Include="Helpers\HandStrengthValuation\FiftyBigBlindsHandStrengthValuation.cs" />
     <Compile Include="Helpers\HandStrengthValuation\TenBigBlindsHandStrengthValuation.cs" />
     <Compile Include="Helpers\HandStrengthValuation\TwentyFiveBlindsHandStrengthValuation.cs" />
@@ -61,6 +62,7 @@
   <ItemGroup>
     <Content Include="Statistic\statistic.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

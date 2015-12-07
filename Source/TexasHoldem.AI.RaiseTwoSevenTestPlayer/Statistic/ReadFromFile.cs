@@ -1,7 +1,7 @@
 ﻿namespace TexasHoldem.AI.RaiseTwoSevenTestPlayer.Statistics
 {
     using System.IO;
-    public static class ReadFromFile
+    public static class FileIORaiseTwoSeven
     {
         private static string filePath;
 
@@ -11,7 +11,7 @@
 
         public static bool ReadFile(string filePath)
         {
-            if (!File.Exists("TextFile1.txt"))
+            if (!File.Exists(filePath))
             {
                 return false;
             }
@@ -23,6 +23,10 @@
 
         }
 
+        public static void WriteFile(string filePath)
+        {
+
+        }
         public static string[] Lines
         {
             get

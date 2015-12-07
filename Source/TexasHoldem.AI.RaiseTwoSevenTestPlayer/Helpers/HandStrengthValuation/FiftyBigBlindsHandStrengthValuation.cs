@@ -233,11 +233,11 @@ namespace TexasHoldem.AI.RaiseTwoSevenTestPlayer.Helpers.HandStrengthValuation
                 case 1:
                     return CardValuationType.Risky;
                 case 2:
-                    return CardValuationType.Raise;
+                    return CardValuationType.Risky;
                 case 3:
-                    return CardValuationType.ThreeBet;
+                    return CardValuationType.Raise;
                 case 4:
-                    return CardValuationType.AllIn;
+                    return CardValuationType.ThreeBet;
                 default:
                     return CardValuationType.Fold;
             }

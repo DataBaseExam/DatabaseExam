@@ -10,8 +10,15 @@
     {
         private string playerName;
         private Dictionary<string, int> oppStats;
-        private Dictionary<string, int> oppHandsCount;
-        //TODO return opponent type
+        //private Dictionary<string, int> oppHandsCount;
+        internal int oppHandsCount;
+        internal int opponendPlaysOnFlop;
+        private int opponentCallsCBet;
+
+        public int opponendPreflopRaise { get; private set; }
+        public int opponentPreflopCheck { get; private set; }
+        public int opponentPlaysOnFlop { get; private set; }
+
         public Statistic(string name)
         {
             this.playerName = name;// TODO: what if name is shorter? Error?
@@ -21,69 +28,73 @@
             makeNewData();
         }
 
-        internal int GetOppAggresionFactor()
+        internal bool EnougthInfo()
         {
-            return (this.oppStats["Bet"] + this.oppStats["Raise"]) / (this.oppStats["Check"] + this.oppStats["Call"] + this.oppStats["Fold"]);
+            if (oppHandsCount > 30)
+            {
+                return true;
+            }
+            return false;
         }
-        
+        //internal int GetOppAggresionFactor()
+        //{
+        //    return (this.oppStats["Bet"] + this.oppStats["Raise"]) / (this.oppStats["Check"] + this.oppStats["Call"] + this.oppStats["Fold"]);
+        //}
+
+        internal void OpponentPlaysOnFlop()
+        {
+            opponentPlaysOnFlop++;
+        }
+        internal void OpponentCallsCBet()
+        {
+            opponentCallsCBet++;
+        }
+
+        internal double GetOpponentCallCBetStats()
+        {
+            return opponentCallsCBet / opponentPlaysOnFlop;
+        }
+
         internal OpponentEvaluationType OpponentType()
         {
-            return OpponentEvaluationType.Tornado;
+            if (opponendPreflopRaise > 40)
+            {
+                return OpponentEvaluationType.Tornado;
+            }
+            else if (opponendPreflopRaise > 30)
+            {
+                return OpponentEvaluationType.Wild;
+            }
+            else if (opponendPreflopRaise > 20)
+            {
+                return OpponentEvaluationType.Solid;
+            }
+            else
+            {
+                return OpponentEvaluationType.Tight;
+            }
+        }
+
+        internal void OpponentPreflopCheckFold()
+        {
+            opponentPreflopCheck++;
         }
         internal void OppPreflopRaise()
         {
-            oppStats["Raise"]++;
-            oppStats["PreflopRaise"]++;
-
-            oppHandsCount["All"]++;
-            oppHandsCount["Preflop"]++;
+            opponendPreflopRaise++;
         }
-
-        internal void OppPreflop3bet()
-        {
-            oppStats["Raise"]++;
-            oppStats["Preflop3Bet"]++;
-
-            oppHandsCount["All"]++;
-            oppHandsCount["Preflop"]++;
-        }
+        
         //TODO: use builder instead
         private void makeNewData()
         {
             oppStats = new Dictionary<string, int>();
-            oppHandsCount = new Dictionary<string, int>();
+            opponendPlaysOnFlop = 0;
+            opponendPreflopRaise = 0;
+            opponentPreflopCheck = 0;
+            opponentPlaysOnFlop = 0;
+            opponentCallsCBet = 0;
 
-            oppStats["Raise"] = 0;
-            oppStats["Bet"] = 0;
-            oppStats["Check"] = 0;
-            oppStats["Fold"] = 0;
-            oppStats["PreflopRaise"] = 0;
-            oppStats["PreflopCall"] = 0;
-            oppStats["PreflopCheck"] = 0;
-            oppStats["PreflopFold"] = 0;
-            oppStats["Preflop3Bet"] = 0;
-            oppStats["FlopRaise"] = 0;
-            oppStats["FlopBet"] = 0;
-            oppStats["FlopCall"] = 0;
-            oppStats["FlopCheck"] = 0;
-            oppStats["FlopFold"] = 0;
-            oppStats["FoldToCBet"] = 0;
-            oppStats["TurnRaise"] = 0;
-            oppStats["TurnBet"] = 0;
-            oppStats["TurnCall"] = 0;
-            oppStats["TurnCheck"] = 0;
-            oppStats["TurnFold"] = 0;
-            oppStats["RiverRaise"] = 0;
-            oppStats["RiverBet"] = 0;
-            oppStats["RiverCall"] = 0;
-            oppStats["RiverCheck"] = 0;
-            oppStats["RiverFold"] = 0;
-
-            oppHandsCount["All"] = 0;
-            oppHandsCount["Preflop"] = 0;
-            oppHandsCount["Flop"] = 0;
-            oppHandsCount["Turn"] = 0;
-            oppHandsCount["River"] = 0;
+            this.oppHandsCount = 0;
         }
     }
 }

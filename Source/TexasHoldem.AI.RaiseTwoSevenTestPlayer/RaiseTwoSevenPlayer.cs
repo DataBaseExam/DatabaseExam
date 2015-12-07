@@ -4,7 +4,7 @@
     using TexasHoldem.Logic.Players;
     using TexasHoldem.Logic.Cards;
     using TexasHoldem.Logic;
-    using Statistic;
+    using Statistics;
     using Helpers;
     using Helpers.HandStrengthValuation;
     
@@ -32,6 +32,7 @@
 
         private int currentPot;
 
+        private Statistic stats;
         //TODO : implement statistic
         public override void StartGame(StartGameContext context)
         {
@@ -45,19 +46,22 @@
                 }
             }
 
-            Statistic.Statistic stats = new Statistic.Statistic(opponentName);
+           this.stats = new Statistic(opponentName);
 
-            this.startMoney = context.StartMoney;
+           this.startMoney = context.StartMoney;
         }
 
         public override void StartHand(StartHandContext context)
         {
-            this.ourMoney = context.MoneyLeft;
+           // this.ourMoney = context.MoneyLeft;
             this.smallBlind = context.SmallBlind;
             this.ourSmallBlindsLeft = this.ourMoney / this.smallBlind;
             this.firstCard = context.FirstCard;
             this.secondCard = context.SecondCard;
-            
+            this.opponentType = stats.OpponentType();
+
+            this.ourMoney = (int)context.MoneyLeft;
+           
             if (ourSmallBlindsLeft >= 50)
             {
                 if (enoughtOpponentInfo)
@@ -88,6 +92,7 @@
 
         public override void StartRound(StartRoundContext context)
         {
+            
             this.currentPot = context.CurrentPot;
             //TODO: inspect current pot
             if (context.CommunityCards.Count > 2)
@@ -116,7 +121,7 @@
             //context.IsAllIn;
             //context.MoneyToCall;
             //context.MyMoneyInTheRound;
-
+           
             #region evaluating hand
             if (50 > ourSmallBlindsLeft && ourSmallBlindsLeft >= 17)
             {
@@ -132,7 +137,8 @@
                 }
                 
             }
-            else if (ourSmallBlindsLeft < 21)
+
+            else if (ourSmallBlindsLeft < 17)
             {
                 if (context.PreviousRoundActions.Count == 2)
                 {
@@ -157,36 +163,41 @@
                     //TODO change value
                     amountOfMoneyToRaisePreflop = this.smallBlind * 10;
                 }
-                else if (this.smallBlind > 50)
+                else if (this.smallBlind > 17)
                 {
                     //TODO change value
                     amountOfMoneyToRaisePreflop = this.smallBlind * 5;
                 }
-                else if (this.smallBlind < 17)
+                else if (this.smallBlind <= 17)
                 {
-                    amountOfMoneyToRaisePreflop = context.MoneyLeft;
+                    amountOfMoneyToRaisePreflop = ourMoney;
                 }
                 #endregion
 
+                #region preflopaction
                 if (context.PreviousRoundActions.Count == 2)//we are on button
                 {
                     if (this.opponentType == OpponentEvaluationType.Tornado)
                     {
-                        if (cardStrength == CardValuationType.Risky
-                           || this.cardStrength == CardValuationType.CallTornadoAllIn)
+                        if (this.cardStrength == CardValuationType.CallTornadoAllIn)
                         {
-                            Console.ReadLine();
                             return PlayerAction.Raise(amountOfMoneyToRaisePreflop);
                         }
 
                     }
-                    
-                    else if (cardStrength == CardValuationType.Risky
-                           || this.cardStrength == CardValuationType.CallTornadoAllIn)
+
+                    else
+                    {
+                        
+                        if (
+                            cardStrength == CardValuationType.Raise
+                           || this.cardStrength == CardValuationType.ThreeBet
+                           || this.cardStrength == CardValuationType.AllIn)
                         {
                             return PlayerAction.Raise(amountOfMoneyToRaisePreflop);
                         }
-                    {
+                        
+                         return PlayerAction.Fold();
                         
                     }
                     
@@ -197,39 +208,93 @@
                     {
                         if (context.IsAllIn || context.MoneyToCall > ourMoney / 20)
                         {
-                            Console.ReadLine();
                             if (this.cardStrength == CardValuationType.CallTornadoAllIn)
                             {
                                 return PlayerAction.Raise(amountOfMoneyToRaisePreflop);
                             }
+                            if (context.CanCheck)
+                            {
+                                return PlayerAction.CheckOrCall();
+                            }
+                            return PlayerAction.Fold();
                         }
                         else
                         {
                             if (
-                                this.cardStrength == CardValuationType.CallTornadoAllIn 
-                                || this.cardStrength == CardValuationType.Risky 
-                                || this.cardStrength == CardValuationType.ThreeBet)
+                                this.cardStrength == CardValuationType.Raise 
+                                || this.cardStrength == CardValuationType.ThreeBet 
+                                || this.cardStrength == CardValuationType.AllIn)
                             {
                                 return PlayerAction.Raise(amountOfMoneyToRaisePreflop);
                             }
+                            if (context.CanCheck)
+                                {
+                                    return PlayerAction.CheckOrCall();
+                                }
+                                return PlayerAction.Fold();
+                            
 
                         }
-                        return PlayerAction.Fold();
                     }
-                    //we are on big blind
+                }
+                else if (context.PreviousRoundActions.Count == 4)//sb and opp has 3betet us
+                {
+                    if (this.opponentType == OpponentEvaluationType.Tornado)
+                    {
+                        if (this.cardStrength == CardValuationType.CallTornadoAllIn)
+                        {
+                            if (context.MoneyToCall * 3 > ourMoney / 10)
+                            {
+                                return PlayerAction.Raise(ourMoney * 2);
+                            }
+                            return PlayerAction.Raise(context.MoneyToCall * 3);
+                        }
 
+                    }
+
+                    else
+                    {
+                        if (
+                            this.cardStrength == CardValuationType.AllIn)
+                        {
+                            if (context.MoneyToCall * 3 > ourMoney / 10)
+                            {
+                                return PlayerAction.Raise(ourMoney * 2);
+                            }
+                            return PlayerAction.Raise(context.MoneyToCall * 3);
+                        }
+                        return PlayerAction.Fold();
+                        
+                    }
                 }
-                else if (context.PreviousRoundActions.Count == 4)
+                else if (context.PreviousRoundActions.Count == 5 || context.PreviousRoundActions.Count == 6) //opponent has 4-betet us
                 {
-                    return PlayerAction.Raise(5);
-                    //we are on btn and opponent has made 3 bet
-                }
-                else if (context.PreviousRoundActions.Count == 5 || context.PreviousRoundActions.Count == 6)
-                {
-                    //opponent has 4-betet us
-                    return PlayerAction.Raise(5);
+
+                    if (this.opponentType == OpponentEvaluationType.Tornado)
+                    {
+                        if (this.cardStrength == CardValuationType.CallTornadoAllIn)
+                        {
+                            if (context.MoneyToCall * 3 > ourMoney / 10)
+                            {
+                                return PlayerAction.Raise(ourMoney * 2);
+                            }
+                            return PlayerAction.Raise(context.MoneyToCall * 3);
+                        }
+
+                    }
+
+                    else
+                    {
+                        if (this.cardStrength == CardValuationType.AllIn)
+                            { 
+                                return PlayerAction.Raise(ourMoney * 2);
+                            } 
+                        return PlayerAction.Fold();
+
+                    }
                 }
             }
+            #endregion
             else if (context.RoundType == GameRoundType.Flop)
             {
 

@@ -1,4 +1,4 @@
-﻿namespace TexasHoldem.AI.RaiseTwoSevenTestPlayer.Statistic
+﻿namespace TexasHoldem.AI.RaiseTwoSevenTestPlayer.Statistics
 {
     public enum OpponentEvaluationType
     {

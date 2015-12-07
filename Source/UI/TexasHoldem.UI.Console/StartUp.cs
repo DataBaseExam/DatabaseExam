@@ -23,7 +23,7 @@
 
             //TODO our player here
             var raiseTwoSevenTestPlayer = new ConsoleUiDecorator(new RaiseTwoSevenPlayer(), 0, GameWidth, 5);
-            var consolePlayer2 = new ConsoleUiDecorator(new DummyPlayer(), 6, GameWidth, 5);
+            var consolePlayer2 = new ConsoleUiDecorator(new SmartPlayer(), 6, GameWidth, 5);
             ITexasHoldemGame game = new TwoPlayersTexasHoldemGame(raiseTwoSevenTestPlayer, consolePlayer2);
             game.Start();
         }

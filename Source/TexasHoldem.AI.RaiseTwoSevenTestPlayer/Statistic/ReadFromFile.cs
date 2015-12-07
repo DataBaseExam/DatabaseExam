@@ -1,36 +1,39 @@
-﻿using System.IO;
-public static class ReadFromFile
+﻿namespace TexasHoldem.AI.RaiseTwoSevenTestPlayer.Statistics
 {
-    private static string filePath;
-
-    private static bool fileExist;
-
-    private static string[] lines;
-
-    public static bool ReadFile(string filePath)
+    using System.IO;
+    public static class ReadFromFile
     {
-        if (!File.Exists("TextFile1.txt"))
+        private static string filePath;
+
+        private static bool fileExist;
+
+        private static string[] lines;
+
+        public static bool ReadFile(string filePath)
         {
-            return false;
-        }
-        else
-        {
-            lines = File.ReadAllLines(filePath);
-            return true;
-        }
-            
-    }
-    
-    public static string[] Lines
-    {
-        get
-        {
-            return lines;
+            if (!File.Exists("TextFile1.txt"))
+            {
+                return false;
+            }
+            else
+            {
+                lines = File.ReadAllLines(filePath);
+                return true;
+            }
+
         }
 
-        private set
+        public static string[] Lines
         {
-            lines = value;
+            get
+            {
+                return lines;
+            }
+
+            private set
+            {
+                lines = value;
+            }
         }
     }
 }

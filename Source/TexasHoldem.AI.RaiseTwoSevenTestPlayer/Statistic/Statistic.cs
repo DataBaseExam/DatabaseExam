@@ -1,4 +1,4 @@
-﻿namespace TexasHoldem.AI.RaiseTwoSevenTestPlayer.Statistic
+﻿namespace TexasHoldem.AI.RaiseTwoSevenTestPlayer.Statistics
 {
     using System;
     using System.Collections.Generic;
@@ -25,7 +25,11 @@
         {
             return (this.oppStats["Bet"] + this.oppStats["Raise"]) / (this.oppStats["Check"] + this.oppStats["Call"] + this.oppStats["Fold"]);
         }
-       
+        
+        internal OpponentEvaluationType OpponentType()
+        {
+            return OpponentEvaluationType.Tornado;
+        }
         internal void OppPreflopRaise()
         {
             oppStats["Raise"]++;

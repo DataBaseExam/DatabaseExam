@@ -40,8 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\HandStrengthValuation\AboveFiftyBigBlindsHandStrengthValuation.cs" />
+    <Compile Include="Evhand\EvHand.cs" />
     <Compile Include="Helpers\HandStrengthValuation\FiftyBigBlindsHandStrengthValuation.cs" />
+    <Compile Include="Helpers\HandStrengthValuation\HandStrengthValuation.cs" />
     <Compile Include="Helpers\HandStrengthValuation\TenBigBlindsHandStrengthValuation.cs" />
     <Compile Include="Helpers\HandStrengthValuation\TwentyFiveBlindsHandStrengthValuation.cs" />
     <Compile Include="Helpers\RaiseTwoSevenCardValuationType.cs" />

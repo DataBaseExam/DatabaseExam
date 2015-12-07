@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TexasHoldem.AI.RaiseTwoSevenTestPlayer.Statistic
+﻿namespace TexasHoldem.AI.RaiseTwoSevenTestPlayer.Statistic
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
     //TODO: Implement statistic and memento instead
     public class Statistic
     {
         private string playerName;
         private Dictionary<string, int> oppStats;
         private Dictionary<string, int> oppHandsCount;
-
+        //TODO return opponent type
         public Statistic(string name)
         {
-            this.playerName = name.Substring(0, 10);// TODO: what if name is shorter? Error?
-
+            this.playerName = name;// TODO: what if name is shorter? Error?
             //read from file
             //if filename exists and if name == firstline read dictionaries from files
             //else.
@@ -27,20 +25,23 @@ namespace TexasHoldem.AI.RaiseTwoSevenTestPlayer.Statistic
         {
             return (this.oppStats["Bet"] + this.oppStats["Raise"]) / (this.oppStats["Check"] + this.oppStats["Call"] + this.oppStats["Fold"]);
         }
-        internal void OppPreflopBet()
-        {
-            oppStats["Bet"]++;
-
-            oppStats["PreflopBet"]++;
-
-        }
-
+       
         internal void OppPreflopRaise()
         {
-            oppStats["Bet"]++;
+            oppStats["Raise"]++;
+            oppStats["PreflopRaise"]++;
 
-            oppStats["PreflopBet"]++;
+            oppHandsCount["All"]++;
+            oppHandsCount["Preflop"]++;
+        }
 
+        internal void OppPreflop3bet()
+        {
+            oppStats["Raise"]++;
+            oppStats["Preflop3Bet"]++;
+
+            oppHandsCount["All"]++;
+            oppHandsCount["Preflop"]++;
         }
         //TODO: use builder instead
         private void makeNewData()
@@ -53,7 +54,6 @@ namespace TexasHoldem.AI.RaiseTwoSevenTestPlayer.Statistic
             oppStats["Check"] = 0;
             oppStats["Fold"] = 0;
             oppStats["PreflopRaise"] = 0;
-            oppStats["PreflopBet"] = 0;
             oppStats["PreflopCall"] = 0;
             oppStats["PreflopCheck"] = 0;
             oppStats["PreflopFold"] = 0;

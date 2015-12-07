@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace TexasHoldem.AI.RaiseTwoSevenTestPlayer.Helpers
 {
-    public enum RaiseTwoSevenCardValuationType
+    public enum CardValuationType
     {
         Fold = 0,
         Risky = 1,
         Raise = 2,
         ThreeBet = 3,
         AllIn = 4,
-        Call = 5
+        CallTornadoAllIn = 5
     }
 }

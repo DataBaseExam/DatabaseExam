@@ -153,43 +153,43 @@ namespace TexasHoldem.AI.RaiseTwoSevenTestPlayer.Helpers.HandStrengthValuation
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5 } // 2
         };
 
-        private static readonly int[,] PreflopCallWeakMinRaiserSuited =
-        {
-            //A  K  Q  J 10  9  8  7  6  5  4  3  2
-            { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 }, // A
-            { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 }, // K
-            { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 }, // Q
-            { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 }, // J
-            { 5, 5, 5, 5, 5, 5, 5, 5, 1, 1, 1, 1, 1 }, // 10
-            { 5, 5, 5, 5, 5, 5, 5, 5, 1, 1, 1, 1, 1 }, // 9
-            { 5, 5, 5, 5, 5, 5, 5, 5, 5, 1, 1, 1, 1 }, // 8
-            { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1, 1, 1 }, // 7
-            { 5, 5, 5, 5, 1, 1, 5, 5, 5, 5, 5, 1, 1 }, // 6
-            { 5, 5, 5, 5, 1, 1, 1, 5, 5, 5, 5, 5, 1 }, // 5
-            { 5, 5, 5, 5, 1, 1, 1, 1, 5, 5, 5, 5, 1 }, // 4
-            { 5, 5, 5, 5, 1, 1, 1, 1, 1, 5, 5, 5, 1 }, // 3
-            { 5, 5, 5, 5, 1, 1, 1, 1, 1, 1, 1, 1, 5 } // 2
-        };
+        //private static readonly int[,] PreflopCallWeakMinRaiserSuited =
+        //{
+        //    //A  K  Q  J 10  9  8  7  6  5  4  3  2
+        //    { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 }, // A
+        //    { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 }, // K
+        //    { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 }, // Q
+        //    { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 }, // J
+        //    { 5, 5, 5, 5, 5, 5, 5, 5, 1, 1, 1, 1, 1 }, // 10
+        //    { 5, 5, 5, 5, 5, 5, 5, 5, 1, 1, 1, 1, 1 }, // 9
+        //    { 5, 5, 5, 5, 5, 5, 5, 5, 5, 1, 1, 1, 1 }, // 8
+        //    { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1, 1, 1 }, // 7
+        //    { 5, 5, 5, 5, 1, 1, 5, 5, 5, 5, 5, 1, 1 }, // 6
+        //    { 5, 5, 5, 5, 1, 1, 1, 5, 5, 5, 5, 5, 1 }, // 5
+        //    { 5, 5, 5, 5, 1, 1, 1, 1, 5, 5, 5, 5, 1 }, // 4
+        //    { 5, 5, 5, 5, 1, 1, 1, 1, 1, 5, 5, 5, 1 }, // 3
+        //    { 5, 5, 5, 5, 1, 1, 1, 1, 1, 1, 1, 1, 5 } // 2
+        //};
 
-        private static readonly int[,] PreflopCallWeakMinRaiserOffSuited =
-        {
-            //A  K  Q  J 10  9  8  7  6  5  4  3  2
-            { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 }, // A
-            { 5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0 }, // K
-            { 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0 }, // Q
-            { 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0 }, // J
-            { 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0 }, // 10
-            { 5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0 }, // 9
-            { 5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0 }, // 8
-            { 5, 5, 0, 0, 0, 5, 5, 5, 5, 0, 0, 0, 0 }, // 7
-            { 5, 0, 0, 0, 0, 0, 0, 5, 5, 5, 0, 0, 0 }, // 6
-            { 5, 0, 0, 0, 0, 0, 0, 0, 5, 5, 0, 0, 0 }, // 5
-            { 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0 }, // 4
-            { 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0 }, // 3
-            { 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5 } // 2
-        };
+        //private static readonly int[,] PreflopCallWeakMinRaiserOffSuited =
+        //{
+        //    //A  K  Q  J 10  9  8  7  6  5  4  3  2
+        //    { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 }, // A
+        //    { 5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0 }, // K
+        //    { 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0 }, // Q
+        //    { 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0 }, // J
+        //    { 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0 }, // 10
+        //    { 5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0 }, // 9
+        //    { 5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0 }, // 8
+        //    { 5, 5, 0, 0, 0, 5, 5, 5, 5, 0, 0, 0, 0 }, // 7
+        //    { 5, 0, 0, 0, 0, 0, 0, 5, 5, 5, 0, 0, 0 }, // 6
+        //    { 5, 0, 0, 0, 0, 0, 0, 0, 5, 5, 0, 0, 0 }, // 5
+        //    { 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0 }, // 4
+        //    { 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0 }, // 3
+        //    { 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5 } // 2
+        //};
 
-        public static RaiseTwoSevenCardValuationType PreflopAgainstTightOpponent(Card firstCard, Card secondCard)
+        public static CardValuationType PreflopAgainstTightOpponent(Card firstCard, Card secondCard)
         {
             var value = firstCard.Suit == secondCard.Suit
                             ? (firstCard.Type < secondCard.Type
@@ -202,21 +202,21 @@ namespace TexasHoldem.AI.RaiseTwoSevenTestPlayer.Helpers.HandStrengthValuation
             switch (value)
             {
                 case 0:
-                    return RaiseTwoSevenCardValuationType.Fold;
+                    return CardValuationType.Fold;
                 case 1:
-                    return RaiseTwoSevenCardValuationType.Risky;
+                    return CardValuationType.Risky;
                 case 2:
-                    return RaiseTwoSevenCardValuationType.Raise;
+                    return CardValuationType.Raise;
                 case 3:
-                    return RaiseTwoSevenCardValuationType.ThreeBet;
+                    return CardValuationType.ThreeBet;
                 case 4:
-                    return RaiseTwoSevenCardValuationType.AllIn;
+                    return CardValuationType.AllIn;
                 default:
-                    return RaiseTwoSevenCardValuationType.Fold;
+                    return CardValuationType.Fold;
             }
         }
 
-        public static RaiseTwoSevenCardValuationType PreflopAgainstSolidOpponent(Card firstCard, Card secondCard)
+        public static CardValuationType PreflopAgainstSolidOpponent(Card firstCard, Card secondCard)
         {
             var value = firstCard.Suit == secondCard.Suit
                             ? (firstCard.Type < secondCard.Type
@@ -229,21 +229,21 @@ namespace TexasHoldem.AI.RaiseTwoSevenTestPlayer.Helpers.HandStrengthValuation
             switch (value)
             {
                 case 0:
-                    return RaiseTwoSevenCardValuationType.Fold;
+                    return CardValuationType.Fold;
                 case 1:
-                    return RaiseTwoSevenCardValuationType.Risky;
+                    return CardValuationType.Risky;
                 case 2:
-                    return RaiseTwoSevenCardValuationType.Raise;
+                    return CardValuationType.Raise;
                 case 3:
-                    return RaiseTwoSevenCardValuationType.ThreeBet;
+                    return CardValuationType.ThreeBet;
                 case 4:
-                    return RaiseTwoSevenCardValuationType.AllIn;
+                    return CardValuationType.AllIn;
                 default:
-                    return RaiseTwoSevenCardValuationType.Fold;
+                    return CardValuationType.Fold;
             }
         }
 
-        public static RaiseTwoSevenCardValuationType PreflopAgainstWildOpponent(Card firstCard, Card secondCard)
+        public static CardValuationType PreflopAgainstWildOpponent(Card firstCard, Card secondCard)
         {
             var value = firstCard.Suit == secondCard.Suit
                             ? (firstCard.Type < secondCard.Type
@@ -256,21 +256,21 @@ namespace TexasHoldem.AI.RaiseTwoSevenTestPlayer.Helpers.HandStrengthValuation
             switch (value)
             {
                 case 0:
-                    return RaiseTwoSevenCardValuationType.Fold;
+                    return CardValuationType.Fold;
                 case 1:
-                    return RaiseTwoSevenCardValuationType.Risky;
+                    return CardValuationType.Risky;
                 case 2:
-                    return RaiseTwoSevenCardValuationType.Raise;
+                    return CardValuationType.Raise;
                 case 3:
-                    return RaiseTwoSevenCardValuationType.ThreeBet;
+                    return CardValuationType.ThreeBet;
                 case 4:
-                    return RaiseTwoSevenCardValuationType.AllIn;
+                    return CardValuationType.AllIn;
                 default:
-                    return RaiseTwoSevenCardValuationType.Fold;
+                    return CardValuationType.Fold;
             }
         }
 
-        public static RaiseTwoSevenCardValuationType PreflopCallThreeBet(Card firstCard, Card secondCard)
+        public static CardValuationType PreflopAgainstTornado(Card firstCard, Card secondCard)
         {
             var value = firstCard.Suit == secondCard.Suit
                             ? (firstCard.Type < secondCard.Type
@@ -283,37 +283,37 @@ namespace TexasHoldem.AI.RaiseTwoSevenTestPlayer.Helpers.HandStrengthValuation
             switch (value)
             {
                 case 0:
-                    return RaiseTwoSevenCardValuationType.Fold;
+                    return CardValuationType.Fold;
                 case 1:
-                    return RaiseTwoSevenCardValuationType.Risky;
+                    return CardValuationType.Risky;
                 case 5:
-                    return RaiseTwoSevenCardValuationType.Call;
+                    return CardValuationType.CallTornadoAllIn;
                 default:
-                    return RaiseTwoSevenCardValuationType.Fold;
+                    return CardValuationType.Fold;
             }
         }
 
-        public static RaiseTwoSevenCardValuationType PreflopCallWeakMinRaiser(Card firstCard, Card secondCard)
-        {
-            var value = firstCard.Suit == secondCard.Suit
-                            ? (firstCard.Type < secondCard.Type
-                                   ? PreflopCallWeakMinRaiserSuited[(int)firstCard.Type - 2, (int)secondCard.Type - 2]
-                                   : PreflopCallWeakMinRaiserSuited[(int)secondCard.Type - 2, (int)firstCard.Type - 2])
-                            : (firstCard.Type < secondCard.Type
-                                   ? PreflopCallWeakMinRaiserOffSuited[(int)firstCard.Type - 2, (int)secondCard.Type - 2]
-                                   : PreflopCallWeakMinRaiserOffSuited[(int)secondCard.Type - 2, (int)firstCard.Type - 2]);
+        //public static RaiseTwoSevenCardValuationType PreflopCallWeakMinRaiser(Card firstCard, Card secondCard)
+        //{
+        //    var value = firstCard.Suit == secondCard.Suit
+        //                    ? (firstCard.Type < secondCard.Type
+        //                           ? PreflopCallWeakMinRaiserSuited[(int)firstCard.Type - 2, (int)secondCard.Type - 2]
+        //                           : PreflopCallWeakMinRaiserSuited[(int)secondCard.Type - 2, (int)firstCard.Type - 2])
+        //                    : (firstCard.Type < secondCard.Type
+        //                           ? PreflopCallWeakMinRaiserOffSuited[(int)firstCard.Type - 2, (int)secondCard.Type - 2]
+        //                           : PreflopCallWeakMinRaiserOffSuited[(int)secondCard.Type - 2, (int)firstCard.Type - 2]);
 
-            switch (value)
-            {
-                case 0:
-                    return RaiseTwoSevenCardValuationType.Fold;
-                case 1:
-                    return RaiseTwoSevenCardValuationType.Risky;
-                case 5:
-                    return RaiseTwoSevenCardValuationType.Call;
-                default:
-                    return RaiseTwoSevenCardValuationType.Fold;
-            }
-        }
+        //    switch (value)
+        //    {
+        //        case 0:
+        //            return RaiseTwoSevenCardValuationType.Fold;
+        //        case 1:
+        //            return RaiseTwoSevenCardValuationType.Risky;
+        //        case 5:
+        //            return RaiseTwoSevenCardValuationType.Call;
+        //        default:
+        //            return RaiseTwoSevenCardValuationType.Fold;
+        //    }
+        //}
     }
 }

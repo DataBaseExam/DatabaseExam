@@ -81,7 +81,7 @@ namespace TexasHoldem.AI.RaiseTwoSevenTestPlayer.Helpers.HandStrengthValuation
             { 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 } // 2
         };
 
-        public static RaiseTwoSevenCardValuationType PreFlopOnButton(Card firstCard, Card secondCard)
+        public static CardValuationType PreFlopOnButton(Card firstCard, Card secondCard)
         {
             var value = firstCard.Suit == secondCard.Suit
                             ? (firstCard.Type < secondCard.Type
@@ -94,19 +94,19 @@ namespace TexasHoldem.AI.RaiseTwoSevenTestPlayer.Helpers.HandStrengthValuation
             switch (value)
             {
                 case 0:
-                    return RaiseTwoSevenCardValuationType.Fold;
+                    return CardValuationType.Fold;
                 case 1:
-                    return RaiseTwoSevenCardValuationType.Risky;
+                    return CardValuationType.Risky;
                 case 2:
-                    return RaiseTwoSevenCardValuationType.Raise;
+                    return CardValuationType.Raise;
                 case 3:
-                    return RaiseTwoSevenCardValuationType.ThreeBet;
+                    return CardValuationType.ThreeBet;
                 default:
-                    return RaiseTwoSevenCardValuationType.Fold;
+                    return CardValuationType.Fold;
             }
         }
 
-        public static RaiseTwoSevenCardValuationType PreFlopOnBigBlind(Card firstCard, Card secondCard)
+        public static CardValuationType PreFlopOnBigBlind(Card firstCard, Card secondCard)
         {
             var value = firstCard.Suit == secondCard.Suit
                             ? (firstCard.Type < secondCard.Type
@@ -119,15 +119,15 @@ namespace TexasHoldem.AI.RaiseTwoSevenTestPlayer.Helpers.HandStrengthValuation
             switch (value)
             {
                 case 0:
-                    return RaiseTwoSevenCardValuationType.Fold;
+                    return CardValuationType.Fold;
                 case 1:
-                    return RaiseTwoSevenCardValuationType.Risky;
+                    return CardValuationType.Risky;
                 case 2:
-                    return RaiseTwoSevenCardValuationType.Raise;
+                    return CardValuationType.Raise;
                 case 3:
-                    return RaiseTwoSevenCardValuationType.ThreeBet;
+                    return CardValuationType.ThreeBet;
                 default:
-                    return RaiseTwoSevenCardValuationType.Fold;
+                    return CardValuationType.Fold;
             }
         }
     }

@@ -3,54 +3,232 @@
     using System;
     using TexasHoldem.Logic.Players;
     using TexasHoldem.Logic.Cards;
-    using Logic;
-    //using Helpers;
-
+    using TexasHoldem.Logic;
+    using Statistic;
+    using Helpers;
+    using Helpers.HandStrengthValuation;
+    
     public class RaiseTwoSevenPlayer : BasePlayer
     {
         public override string Name { get; } = "RaiseTwoSeven";
 
-        public bool IsOnButton { get; private set; }
+        private int startMoney;
 
-        public bool HaveBeenRaisedPreflop { get; private set; }
+        private CardValuationType cardStrength;
 
-        public bool HaveBeenRaisedOnFlop { get; private set; }
+        private OpponentEvaluationType opponentType;
 
-        public bool HaveBeenRaisedOnTurn { get; private set; }
+        private Card firstCard;
 
-        public bool HaveBeenRaisedOnRiver { get; private set; }
+        private Card secondCard;
 
-        public bool OpponentHasMadeValueBet { get; private set; }
+        private int ourSmallBlindsLeft;
 
-        public bool OpponentHasMadeCBet { get; private set; }
+        private int ourMoney;
 
+        private int smallBlind;
 
-        public override PlayerAction GetTurn(GetTurnContext context)
+        private bool enoughtOpponentInfo;
+
+        private int currentPot;
+
+        //TODO : implement statistic
+        public override void StartGame(StartGameContext context)
         {
-            if (context.RoundType == GameRoundType.PreFlop)
+            var opponentName = "";
+            this.opponentType = OpponentEvaluationType.Tornado;
+            foreach (var name in context.PlayerNames)
             {
-                UpdateRoundStatistics();
-                
-
-                if (context.PreviousRoundActions.Count == 2)
+                if(name != this.Name)
                 {
-                    IsOnButton = true;
-                    //var playHand = FiftyBigBlindsHandStrengthValuation.PreFlopOnButton(this.FirstCard, this.SecondCard);
+                    opponentName = name.Substring(0 , 7);
                 }
+            }
 
-                if (IsOnButton)
+            Statistic.Statistic stats = new Statistic.Statistic(opponentName);
+
+            this.startMoney = context.StartMoney;
+        }
+
+        public override void StartHand(StartHandContext context)
+        {
+            this.ourMoney = context.MoneyLeft;
+            this.smallBlind = context.SmallBlind;
+            this.ourSmallBlindsLeft = this.ourMoney / this.smallBlind;
+            this.firstCard = context.FirstCard;
+            this.secondCard = context.SecondCard;
+            
+            if (ourSmallBlindsLeft >= 50)
+            {
+                if (enoughtOpponentInfo)
                 {
-                    if (context.MoneyLeft / context.SmallBlind > 100)
+                    if (opponentType == OpponentEvaluationType.Solid)
                     {
-                        if (context.CanCheck)
-                        {
-                            return PlayerAction.Raise(context.SmallBlind * 3);
-                        }
-                        
+                        this.cardStrength = FiftyBigBlindsHandStrengthValuation.PreflopAgainstSolidOpponent(this.firstCard, this.secondCard);
+                    }
+                    else if (opponentType == OpponentEvaluationType.Tight)
+                    {
+                        this.cardStrength = FiftyBigBlindsHandStrengthValuation.PreflopAgainstTightOpponent(this.firstCard, this.secondCard);
+                    }
+                    else if (opponentType == OpponentEvaluationType.Wild)
+                    {
+                        this.cardStrength = FiftyBigBlindsHandStrengthValuation.PreflopAgainstWildOpponent(this.firstCard, this.secondCard);
+                    }
+                    else if (opponentType == OpponentEvaluationType.Tornado)
+                    {
+                        this.cardStrength = FiftyBigBlindsHandStrengthValuation.PreflopAgainstTornado(this.firstCard, this.secondCard);
                     }
                 }
+                else
+                {
+                    this.cardStrength = FiftyBigBlindsHandStrengthValuation.PreflopAgainstSolidOpponent(this.firstCard, this.secondCard);
+                }
+            }
+        }
 
+        public override void StartRound(StartRoundContext context)
+        {
+            this.currentPot = context.CurrentPot;
+            //TODO: inspect current pot
+            if (context.CommunityCards.Count > 2)
+            {
+                foreach (var card in context.CommunityCards)
+                {
+                    //TODO: what we hit
+                }
+            }
             
+        }
+
+        public override void EndRound(EndRoundContext context)
+        {
+            //TODO: get round actions?
+        }
+        public override void EndGame(EndGameContext context)
+        {
+            //TODO : save statistic
+        }
+        public override PlayerAction GetTurn(GetTurnContext context)
+        {
+            //context.CanCheck;
+            //context.CurrentMaxBet;
+            //context.CurrentPot;
+            //context.IsAllIn;
+            //context.MoneyToCall;
+            //context.MyMoneyInTheRound;
+
+            #region evaluating hand
+            if (50 > ourSmallBlindsLeft && ourSmallBlindsLeft >= 17)
+            {
+                if (context.PreviousRoundActions.Count == 2)
+                {
+                    // we are on btn
+                    this.cardStrength = TwentyFiveBlindsHandStrengthValuation.PreFlopOnButton(this.firstCard, this.secondCard);
+                }
+                else if (context.PreviousRoundActions.Count == 3)
+                {
+                    this.cardStrength = TwentyFiveBlindsHandStrengthValuation.PreFlopOnBigBlind(this.firstCard, this.secondCard);
+                    //we are on big blind
+                }
+                
+            }
+            else if (ourSmallBlindsLeft < 21)
+            {
+                if (context.PreviousRoundActions.Count == 2)
+                {
+                    // we are on btn
+                    this.cardStrength = TenBigBlindsHandStrengthValuation.PreflopShove(this.firstCard, this.secondCard);
+                }
+                else if (context.PreviousRoundActions.Count == 3)
+                {
+                    this.cardStrength = TenBigBlindsHandStrengthValuation.PreflopCallAllIn(this.firstCard, this.secondCard);
+                    //we are on big blind
+                }
+            }
+            #endregion
+
+            if (context.RoundType == GameRoundType.PreFlop)
+            {
+                var amountOfMoneyToRaisePreflop = 0;
+
+                #region how much to raise preflop
+                if (this.smallBlind > 100)
+                {
+                    //TODO change value
+                    amountOfMoneyToRaisePreflop = this.smallBlind * 10;
+                }
+                else if (this.smallBlind > 50)
+                {
+                    //TODO change value
+                    amountOfMoneyToRaisePreflop = this.smallBlind * 5;
+                }
+                else if (this.smallBlind < 17)
+                {
+                    amountOfMoneyToRaisePreflop = context.MoneyLeft;
+                }
+                #endregion
+
+                if (context.PreviousRoundActions.Count == 2)//we are on button
+                {
+                    if (this.opponentType == OpponentEvaluationType.Tornado)
+                    {
+                        if (cardStrength == CardValuationType.Risky
+                           || this.cardStrength == CardValuationType.CallTornadoAllIn)
+                        {
+                            Console.ReadLine();
+                            return PlayerAction.Raise(amountOfMoneyToRaisePreflop);
+                        }
+
+                    }
+                    
+                    else if (cardStrength == CardValuationType.Risky
+                           || this.cardStrength == CardValuationType.CallTornadoAllIn)
+                        {
+                            return PlayerAction.Raise(amountOfMoneyToRaisePreflop);
+                        }
+                    {
+                        
+                    }
+                    
+                }
+                else if (context.PreviousRoundActions.Count == 3)
+                {
+                    if (this.opponentType == OpponentEvaluationType.Tornado)
+                    {
+                        if (context.IsAllIn || context.MoneyToCall > ourMoney / 20)
+                        {
+                            Console.ReadLine();
+                            if (this.cardStrength == CardValuationType.CallTornadoAllIn)
+                            {
+                                return PlayerAction.Raise(amountOfMoneyToRaisePreflop);
+                            }
+                        }
+                        else
+                        {
+                            if (
+                                this.cardStrength == CardValuationType.CallTornadoAllIn 
+                                || this.cardStrength == CardValuationType.Risky 
+                                || this.cardStrength == CardValuationType.ThreeBet)
+                            {
+                                return PlayerAction.Raise(amountOfMoneyToRaisePreflop);
+                            }
+
+                        }
+                        return PlayerAction.Fold();
+                    }
+                    //we are on big blind
+
+                }
+                else if (context.PreviousRoundActions.Count == 4)
+                {
+                    return PlayerAction.Raise(5);
+                    //we are on btn and opponent has made 3 bet
+                }
+                else if (context.PreviousRoundActions.Count == 5 || context.PreviousRoundActions.Count == 6)
+                {
+                    //opponent has 4-betet us
+                    return PlayerAction.Raise(5);
+                }
             }
             else if (context.RoundType == GameRoundType.Flop)
             {
@@ -64,30 +242,8 @@
             {
 
             }
-
-
-
-            if (FirstCard.Type == CardType.Two && SecondCard.Type == CardType.Seven
-                || SecondCard.Type == CardType.Two && FirstCard.Type == CardType.Seven)
-            {
-                return PlayerAction.Raise(context.MoneyLeft);
-            }
-            else
-            {
-                return PlayerAction.Fold();
-            }
-
+            return PlayerAction.CheckOrCall();
         }
 
-        public void UpdateRoundStatistics()
-        {
-            IsOnButton = false;
-            HaveBeenRaisedPreflop = false;
-            HaveBeenRaisedOnFlop = false;
-            HaveBeenRaisedOnTurn = false;
-            HaveBeenRaisedOnRiver = false;
-            OpponentHasMadeValueBet = false;
-            OpponentHasMadeCBet = false;
-        }
     }
 }

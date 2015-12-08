@@ -8,6 +8,9 @@ namespace TexasHoldem.AI.RaiseTwoSevenTestPlayer.Statistics
 {
     internal class OppStats
     {
+        private Dictionary<string, Dictionary<string, int>> oppStats;
+        private Dictionary<string, int> oppHandsCount;
+
         internal OppStats()
         {
 

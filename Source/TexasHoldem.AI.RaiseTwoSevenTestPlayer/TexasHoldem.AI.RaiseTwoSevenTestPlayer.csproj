@@ -51,7 +51,7 @@
     <Compile Include="RaiseTwoSevenPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Statistic\OppStats.cs" />
-    <Compile Include="Statistic\ReadFromFile.cs" />
+    <Compile Include="Statistic\FileIORaiseTwoSeven.cs" />
     <Compile Include="Statistic\OpponentEvaluationType.cs" />
     <Compile Include="Statistic\Statistic.cs" />
   </ItemGroup>

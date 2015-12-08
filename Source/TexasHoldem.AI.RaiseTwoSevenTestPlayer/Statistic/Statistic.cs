@@ -9,8 +9,9 @@
     public class Statistic
     {
         private string playerName;
-        private Dictionary<string, int> oppStats;
-        //private Dictionary<string, int> oppHandsCount;
+
+        internal OppStats oppStats;
+
         internal int oppHandsCount;
         internal int opponendPlaysOnFlop;
         private int opponentCallsCBet;
@@ -87,7 +88,7 @@
         //TODO: use builder instead
         private void makeNewData()
         {
-            oppStats = new Dictionary<string, int>();
+            
             opponendPlaysOnFlop = 0;
             opponendPreflopRaise = 0;
             opponentPreflopCheck = 0;
